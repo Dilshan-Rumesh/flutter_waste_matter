@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "413316160186",
+    "firebase_url": "https://garbage-management1.firebaseio.com",
+    "project_id": "garbage-management1",
+    "storage_bucket": "garbage-management1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413316160186:android:6a4f84816f82d5e59d8083",
+        "android_client_info": {
+          "package_name": "com.example.first_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413316160186-o1ohhtc76e8cgg0fd39ietk4ufr5huc0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC59O0vcvn3Wf6358m6QknmlCPFQTzvnBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413316160186-o1ohhtc76e8cgg0fd39ietk4ufr5huc0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
