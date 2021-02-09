@@ -35,7 +35,10 @@ dependencies:
   geolocator: ^6.1.5
   # location: ^3.0.2
   # geo_location_finder: ^1.0.7
-  
+  dio: ^3.0.10
+  http: ^0.12.2
+  flutter_secure_storage: ^3.3.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './service.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -6,8 +7,35 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
+  var api = Service();
+
+  final name = TextEditingController();
+  final address = TextEditingController();
+  final email = TextEditingController();
+  final pwd = TextEditingController();
+  final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    Future<void> _showMyDialog(txt) async {
+      return showDialog<void>(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(txt),
+            actions: <Widget>[
+              TextButton(
+                child: Text('ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return new Scaffold(
         resizeToAvoidBottomPadding: false,
         body: Column(
@@ -41,53 +69,91 @@ class _SignupPageState extends State<SignupPage> {
                   padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
                   child: Column(
                     children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'NAME',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            // hintText: 'EMAIL',
-                            // hintStyle: ,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                      ),
-                      SizedBox(height: 10.0),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'ADDRESS',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                        obscureText: true,
-                      ),
-                      SizedBox(height: 10.0),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'EMAIL',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                      ),
-                      SizedBox(height: 10.0),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'PASSWORD',
-                            labelStyle: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.green))),
-                      ),
-                      SizedBox(height: 50.0),
+                      Form(
+                          key: formkey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter name';
+                                  }
+                                  return null;
+                                },
+                                controller: name,
+                                decoration: InputDecoration(
+                                    labelText: 'NAME',
+                                    labelStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                    // hintText: 'EMAIL',
+                                    // hintStyle: ,
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.green))),
+                              ),
+                              SizedBox(height: 10.0),
+                              TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter address';
+                                  }
+                                  return null;
+                                },
+                                controller: address,
+                                decoration: InputDecoration(
+                                    labelText: 'ADDRESS',
+                                    labelStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.green))),
+                                obscureText: true,
+                              ),
+                              SizedBox(height: 10.0),
+                              TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter email';
+                                  }
+                                  return null;
+                                },
+                                controller: email,
+                                decoration: InputDecoration(
+                                    labelText: 'EMAIL',
+                                    labelStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.green))),
+                              ),
+                              SizedBox(height: 10.0),
+                              TextFormField(
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Please enter password';
+                                  }
+                                  return null;
+                                },
+                                controller: pwd,
+                                decoration: InputDecoration(
+                                    labelText: 'PASSWORD',
+                                    labelStyle: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                    focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.green))),
+                              ),
+                              SizedBox(height: 50.0),
+                            ],
+                          )),
                       Container(
                           height: 40.0,
                           child: Material(
@@ -96,7 +162,26 @@ class _SignupPageState extends State<SignupPage> {
                             color: Colors.green,
                             elevation: 7.0,
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () async {
+                                if (this.formkey.currentState.validate()) {
+                                  Map<String, dynamic> respons =
+                                      await api.exec("register", {
+                                    "name": this.name.text,
+                                    "address": this.address.text,
+                                    "email": this.email.text,
+                                    "pwd": this.pwd.text,
+                                  });
+
+                                  if (respons["status"] == "success") {
+                                    _showMyDialog("Resgister success");
+                                    Future.delayed(Duration(seconds: 2), () {
+                                      Navigator.of(context).pushNamed('/home');
+                                    });
+                                  } else {
+                                    _showMyDialog("Resgister Error");
+                                  }
+                                }
+                              },
                               child: Center(
                                 child: Text(
                                   'SIGNUP',

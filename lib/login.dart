@@ -5,6 +5,7 @@ import 'complains.dart';
 import 'viewbins.dart';
 // import 'viewshedule.dart';
 import 'maindrawer.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -153,8 +154,10 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.transparent,
                               borderRadius: BorderRadius.circular(20.0)),
                           child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
+                            onTap: () async {
+                              final storage = new FlutterSecureStorage();
+                              await storage.deleteAll();
+                              Navigator.of(context).pushNamed('/home');
                             },
                             child: Center(
                               child: Text('Log Out',
