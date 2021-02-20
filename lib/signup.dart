@@ -111,7 +111,6 @@ class _SignupPageState extends State<SignupPage> {
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.green))),
-                                obscureText: true,
                               ),
                               SizedBox(height: 10.0),
                               TextFormField(
@@ -150,6 +149,7 @@ class _SignupPageState extends State<SignupPage> {
                                     focusedBorder: UnderlineInputBorder(
                                         borderSide:
                                             BorderSide(color: Colors.green))),
+                                obscureText: true,
                               ),
                               SizedBox(height: 50.0),
                             ],

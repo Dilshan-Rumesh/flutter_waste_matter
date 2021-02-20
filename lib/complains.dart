@@ -100,7 +100,7 @@ class _ComplainsPageState extends State<ComplainsPage> {
                             });
 
                             if (respons["status"] == "success") {
-                              _showMyDialog("Thank you For Comlain");
+                              _showMyDialog("Thank you For Complain");
                               Future.delayed(Duration(seconds: 2), () {
                                 Navigator.of(context).pushNamed('/login');
                               });
